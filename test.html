@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>加解密时仅需要秘钥</title>
+<script src="./aes_2.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+        var pwd="秘钥";
+
+        function Encrypt(word){
+            return CryptoJS.AES.encrypt(word,pwd).toString();
+        }
+
+        function Decrypt(word){
+            return CryptoJS.AES.decrypt(word,pwd).toString(CryptoJS.enc.Utf8);
+        }
+		var str = 'nihaoawdwdw1231..+';
+		console.log('加密前：'+str)
+        var mm = Encrypt(str);
+		console.log("加密后：")
+        console.log(mm)
+        var jm = Decrypt(mm);
+		console.log("解密后：")
+        console.log(jm)
+       
+</script>
+</body>
+</html
