@@ -4,27 +4,57 @@
 <meta charset="UTF-8">
 <title>加解密时仅需要秘钥</title>
 <script src="./aes_2.js"></script>
+<script src="./jsencrypt.min.js"></script>
 </head>
 <body>
 <script type="text/javascript">
-        var pwd="秘钥";
+      
+		function my_AES(){
+			var pwd="秘钥";
 
-        function Encrypt(word){
-            return CryptoJS.AES.encrypt(word,pwd).toString();
-        }
+			function Encrypt(word){
+				return CryptoJS.AES.encrypt(word,pwd).toString();
+			}
 
-        function Decrypt(word){
-            return CryptoJS.AES.decrypt(word,pwd).toString(CryptoJS.enc.Utf8);
-        }
-		var str = 'nihaoawdwdw1231..+';
-		console.log('加密前：'+str)
-        var mm = Encrypt(str);
-		console.log("加密后：")
-        console.log(mm)
-        var jm = Decrypt(mm);
-		console.log("解密后：")
-        console.log(jm)
+			function Decrypt(word){
+				return CryptoJS.AES.decrypt(word,pwd).toString(CryptoJS.enc.Utf8);
+			}
+			var str = 'nihaoawdwdw1231..+';
+			console.log('加密前：'+str)
+			var mm = Encrypt(str);
+			console.log("加密后：")
+			console.log(mm)
+			var jm = Decrypt(mm);
+			console.log("解密后：")
+			console.log(jm)
+		}
+		
+		function my_RSA(){
+			var privateKey = "MIICXQIBAAKBgQDE8iYu1RZraUhD7/ZkhiRt7ttUooaMjVFG5SbQv8IwjZNkkKx6+BdnVo1lBP/ybraV6d28QlA158ssI+ZUf2sWskQ+lijzdKK13ZrNHIYZpSKOp6c5CF0omQ+QlCylT6MNpfUQC7mFebOuYhG3g2G72NktLBAJu8Ya+4dEQM5xDQIDAQABAoGABEmcRLE9ZXW7jcUT2WDlOqJ0Um2eXcF210MGWw2NqfZvEsWmh5/OjKCg/+XBt7Kq1W0rt10/N0k2Tl3ytfy3JVO847PxL0yWU7LyYecogR9KCaYsvUOfOAD02GGXrov+5dXPEaiCROv0DBP+Z75Lss26Np7lGMFNdTClD7jS+UkCQQDFSkYDn3iEVRBx+tlviJQazSMN/jdw3esmBieNntKcQsPHx5xL8BSfRVUJGylVKXNG7kbPDpLaEe15IPajD5/1AkEA/42myHm8pokTUPcL76or6GpVt3ciz53PYhubRt4uoEbihlHK2Q3zQg6HRiBGX3vGlk9/N5nFwjiCAH4w7ZnVuQJBAIGk7yFOV+nN5EKiLuRGAd0i1FhLp675hZ61CKTdq1SX4wOTPjgAieynqNuVB7I4zNHdnpZN4159zWl9qdU5XUkCQQCSjNobV2yvGCbCpJnsu+roIqq7Ro/o/ffirDA0yM92TJA1NQydwtlAhXJf7bxNn363zikHaqC1C5DJ1ZQbfb/JAkArFYobbT/xvK/GfHAwPpqrNuJNned0YoxyWkMBf3RLgvtUQRClA25IzOlRS6j+mPXRQHaW8Ih80sdv/rS+UmEp";
+			var publicKey="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDE8iYu1RZraUhD7/ZkhiRt7ttUooaMjVFG5SbQv8IwjZNkkKx6+BdnVo1lBP/ybraV6d28QlA158ssI+ZUf2sWskQ+lijzdKK13ZrNHIYZpSKOp6c5CF0omQ+QlCylT6MNpfUQC7mFebOuYhG3g2G72NktLBAJu8Ya+4dEQM5xDQIDAQAB";
+			var data = 'nihao2';
+			console.log('数据：'+data);
+			var cryptData = rsaEncrypt(data,publicKey);
+			console.log('加密数据：'+cryptData);
+			console.log('解密数据：'+rsaDecrypt(cryptData,privateKey));
+		}
+		
+		function rsaDecrypt(msg,key){ //v3.2.0
+			var decrypt = new JSEncrypt();
+			decrypt.setPrivateKey(key);
+			var decryptMsg = decrypt.decrypt(msg);
+			return decryptMsg;
+		}
+		
+		function rsaEncrypt(msg,key){ //v3.2.0
+			var encrypt = new JSEncrypt();
+			encrypt.setPublicKey(key);
+			var encryptMsg = encrypt.encrypt(msg);
+			return encryptMsg;
+		}
+		
+		my_RSA();
        
 </script>
 </body>
-</html
+</html>
